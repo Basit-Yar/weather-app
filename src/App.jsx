@@ -6,7 +6,7 @@ function App() {
 
   return (
     <>
-      <div className='bg-green-100 w-full min-h-[100vh]'>
+      <div className='bg-green-50 w-full min-h-[100vh]'>
         <Header />
         {/* <Footer /> */}
         <SearchBar />
