@@ -1,6 +1,6 @@
 import Header from './components/Header'
-import Footer from './components/Footer'
 import './App.css'
+import SearchBar from './components/SearchBar'
 
 function App() {
 
@@ -9,6 +9,7 @@ function App() {
       <div className='bg-green-100 w-full min-h-[100vh]'>
         <Header />
         {/* <Footer /> */}
+        <SearchBar />
       </div>
     </>
   )
