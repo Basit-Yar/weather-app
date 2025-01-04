@@ -1,21 +1,32 @@
-import react from 'react';
+import react, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
+
+import ThemeBoxSetting from './ThemeBoxSetting';
 
 const Header = () => {
 
+    const [isThemeSettingOpen, setThemeSettingOpen] = useState(false);
+
+    const toggleThemeSetting = () => {
+        setThemeSettingOpen(prev => !prev);
+    }
+
     return (
         <>
-            <div className='h-16 shadow-md flex justify-between md:px-16 items-center'>
+            <div className='h-14 shadow-md flex justify-between sm:px-16 items-center'>
                 <div id='logo'>
                     <h1 className='text-2xl font-extrabold text-violet-700'>
                         WeatherForecast
                     </h1>
                 </div>
                 <div id='theme-mode'
-                    className='flex items-end text-violet-700 font-semibold'
+                    className='relative flex items-end text-violet-700 font-semibold border-violet-700 px-2 rounded-md gap-1'
+                    style={{ border: `1px solid` }}
+                    onClick={toggleThemeSetting}
                 >
-                    <span className='text-lg'>Theme</span>
+                    <span className='sm:text-lg'>Theme</span>
                     <ChevronDown size={24} />
+                    {isThemeSettingOpen && <ThemeBoxSetting />}
                 </div>
             </div>
         </>
