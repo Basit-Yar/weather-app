@@ -1,5 +1,5 @@
 import react, { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 
 import ThemeBoxSetting from './ThemeBoxSetting';
 
@@ -25,7 +25,8 @@ const Header = () => {
                     onClick={toggleThemeSetting}
                 >
                     <span className='sm:text-lg'>Theme</span>
-                    <ChevronDown size={24} />
+                    {isThemeSettingOpen || <ChevronDown size={24} />}
+                    {isThemeSettingOpen && <ChevronUp size={24} />}
                     {isThemeSettingOpen && <ThemeBoxSetting />}
                 </div>
             </div>
