@@ -4,7 +4,7 @@ const SearchBar = () => {
 
     return (
         <>
-            <div className="flex justify-between items-center mx-3 sm:mx-16 p-3 sm:p-4 my-4 rounded-md bg-green-100 shadow-md">
+            <div className="flex justify-between items-center p-3 sm:p-4 mx-3 sm:mx-16 my-4 rounded-md bg-green-100 shadow-md">
                 <div className='md:w-2/5 w-4/6 relative border-0 border-red-600'>
                     <input
                         placeholder="Search for a city..."
