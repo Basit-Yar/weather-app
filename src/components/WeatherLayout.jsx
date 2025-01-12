@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import CurrentWeather from "./CurrentWeather";
 
 const WeatherLayout = () => {
 
@@ -24,15 +25,7 @@ const WeatherLayout = () => {
 
     return (
         <>
-            <h1>Temperature: {weatherData.main?.temp}</h1>
-            <h1>city: {weatherData.name}, {weatherData.sys?.country}</h1>
-            <h1>Feels like: {weatherData.main?.feels_like}</h1>
-            <h1>Cloud: {weatherData.clouds?.all}%</h1>
-            <h1>Wind: {weatherData.wind?.speed}</h1>
-            <h1>Humidity: {weatherData.main?.humidity}</h1>
-            <h1>Pressure: {weatherData.main?.pressure}</h1>
-            <h1>icon: <img src={`https://openweathermap.org/img/wn/${weatherData.weather && weatherData.weather[0]?.icon}@2x.png`} alt="Weather Icon" /></h1>
-            <h1>Weather description: {weatherData.weather && weatherData?.weather[0]?.description}</h1>
+            <CurrentWeather data={weatherData} />
         </>
     )
 }
