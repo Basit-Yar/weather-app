@@ -10,6 +10,7 @@ const HourlyForecast = (props) => {
             <p className="text-center">Degree</p> */}
 
             <img src={`https://openweathermap.org/img/wn/${props.icon}@2x.png`} alt="" />
+            <h2 className="text-center font-bold">{props.temp}</h2>
         </div>
     )
 }
@@ -21,7 +22,7 @@ const TodayForecast = () => {
     useEffect(() => {
         const todayHourlyWeatherInfo = () => {
 
-            fetch("https://api.openweathermap.org/data/2.5/forecast?q=bhopal&appid=66ec6d9193d441b0fe920565f19f4442")
+            fetch(`https://api.openweathermap.org/data/2.5/forecast?q=bhopal&appid=${import.meta.env.VITE_APP_ID}`)
                 .then(response => response.json())
                 .then(data => {
                     const requiredData = data.list.filter(x => {
@@ -51,15 +52,18 @@ const TodayForecast = () => {
                     {todayWeatherForecastData.length} available forecasts
                 </h4>
 
-                {
-                    todayWeatherForecastData.map((hourlyData, index) =>
-                        <HourlyForecast
-                            key={index}
-                            time={hourlyData.dt_txt.split(" ")[1].slice(0, 5)}
-                            icon={hourlyData.weather[0].icon}
-                        />
-                    )
-                }
+                <div className="flex justify-center items-center">
+                    {
+                        todayWeatherForecastData.map((hourlyData, index) =>
+                            <HourlyForecast
+                                key={index}
+                                time={hourlyData.dt_txt.split(" ")[1].slice(0, 5)}
+                                icon={hourlyData.weather[0].icon}
+                                temp={hourlyData.main.temp}
+                            />
+                        )
+                    }
+                </div>
 
             </div>
         </>
