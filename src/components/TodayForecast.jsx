@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+// import { useState, useEffect } from "react";
 import HourlyForecast from "./HourlyForecast";
 
-const TodayForecast = () => {
+const TodayForecast = ({todayWeatherForecastData}) => {
 
     // const [todayWeatherForecastData, setTodayWeatherForecastDate] = useState([]);
 
