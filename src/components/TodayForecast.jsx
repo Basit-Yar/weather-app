@@ -1,44 +1,31 @@
 import { useState, useEffect } from "react";
-
-const HourlyForecast = (props) => {
-
-    return (
-        <div className="mx-0.5 mt-5 border border-green-300 bg-green-200 p-2 min-h-36 w-28 shadow-md">
-            <h3 className="text-center text-sm">{props.time}</h3>
-
-            {/* <img className="border border-red-700" src="https://raw.githubusercontent.com/aminawinti/the-weather-forecasting/refs/heads/main/src/assets/icons/01d.png" alt="err" />
-            <p className="text-center">Degree</p> */}
-
-            <img src={`https://openweathermap.org/img/wn/${props.icon}@2x.png`} alt="" />
-            <h2 className="text-center font-bold">{props.temp}°K</h2>
-        </div>
-    )
-}
+import HourlyForecast from "./HourlyForecast";
 
 const TodayForecast = () => {
 
-    const [todayWeatherForecastData, setTodayWeatherForecastDate] = useState([]);
+    // const [todayWeatherForecastData, setTodayWeatherForecastDate] = useState([]);
 
-    useEffect(() => {
-        const todayHourlyWeatherInfo = () => {
+    // useEffect(() => {
+    //     const todayHourlyWeatherInfo = () => {
 
-            fetch(`https://api.openweathermap.org/data/2.5/forecast?q=bhopal&appid=${import.meta.env.VITE_APP_ID}`)
-                .then(response => response.json())
-                .then(data => {
-                    const requiredData = data.list.filter(x => {
-                        let currentDate = new Date().toISOString().split("T")[0];
-                        let recordDate = x.dt_txt.split(" ")[0];
-                        return currentDate == recordDate;
-                    });
-                    setTodayWeatherForecastDate(requiredData);
-                })
-                .catch(error => {
-                    console.log("error occured: " + error);
-                })
-        }
-        todayHourlyWeatherInfo();
+    //         fetch(`https://api.openweathermap.org/data/2.5/forecast?q=bhopal&appid=${import.meta.env.VITE_APP_ID}`)
+    //             .then(response => response.json())
+    //             .then(data => {
+    //                 const requiredData = data.list.filter(x => {
+    //                     let currentDate = new Date().toISOString().split("T")[0];
+    //                     // let currentDate = new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split("T")[0]; // tomorrowDate
+    //                     let recordDate = x.dt_txt.split(" ")[0];
+    //                     return currentDate == recordDate;
+    //                 });
+    //                 setTodayWeatherForecastDate(requiredData);
+    //             })
+    //             .catch(error => {
+    //                 console.log("error occured: " + error);
+    //             })
+    //     }
+    //     todayHourlyWeatherInfo();
 
-    }, []);
+    // }, []);
     // console.log(todayWeatherForecastData);
 
     return (
@@ -52,7 +39,7 @@ const TodayForecast = () => {
                     {todayWeatherForecastData.length} available forecasts
                 </h4>
 
-                <div className="flex justify-center items-center">
+                <div className={`flex ${todayWeatherForecastData.length < 3 ? "justify-center": "sm:justify-center"} items-center overflow-x-auto py-2`}>
                     {
                         todayWeatherForecastData.map((hourlyData, index) =>
                             <HourlyForecast
