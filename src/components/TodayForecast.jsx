@@ -1,7 +1,7 @@
 // import { useState, useEffect } from "react";
 import HourlyForecast from "./HourlyForecast";
 
-const TodayForecast = ({todayWeatherForecastData}) => {
+const TodayForecast = ({hourlyForecastData}) => {
 
     // const [todayWeatherForecastData, setTodayWeatherForecastDate] = useState([]);
 
@@ -36,12 +36,12 @@ const TodayForecast = ({todayWeatherForecastData}) => {
                     TODAY'S FORECAST
                 </h2>
                 <h4 className="text-center text-xs sm:text-sm font-normal text-slate-400">
-                    {todayWeatherForecastData.length} available forecasts
+                    {hourlyForecastData.length} available forecasts
                 </h4>
 
-                <div className={`flex ${todayWeatherForecastData.length < 3 ? "justify-center": "sm:justify-center"} items-center overflow-x-auto py-2`}>
+                <div className={`flex ${hourlyForecastData.length < 3 ? "justify-center": "sm:justify-center"} items-center overflow-x-auto py-2`}>
                     {
-                        todayWeatherForecastData.map((hourlyData, index) =>
+                        hourlyForecastData.map((hourlyData, index) =>
                             <HourlyForecast
                                 key={index}
                                 time={hourlyData.dt_txt.split(" ")[1].slice(0, 5)}

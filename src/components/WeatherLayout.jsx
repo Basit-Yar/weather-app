@@ -11,7 +11,7 @@ const WeatherLayout = () => {
     const [city, setCity] = useState("Bhopal"); // we will change the code for city.
     const [weatherData, setWeatherData] = useState({});
     const [weeklyForecastData, setWeeklyForecastData] = useState(null);
-    const [todayWeatherForecastData, setTodayWeatherForecastData] = useState([]);
+    const [hourlyForecastData, setHourlyForecastData] = useState([]);
 
     useEffect(() => {
         try {
@@ -50,7 +50,7 @@ const WeatherLayout = () => {
                 });
                 // console.log("requiredData: ");
                 // console.log(requiredData);
-                setTodayWeatherForecastData(requiredData);
+                setHourlyForecastData(requiredData);
             }
         }
         setTodayHourlyForecastData();
@@ -61,7 +61,7 @@ const WeatherLayout = () => {
     return (
         <>
             <CurrentWeather data={weatherData} />
-            <TodayForecast todayWeatherForecastData={todayWeatherForecastData} />
+            <TodayForecast hourlyForecastData={hourlyForecastData} />
         </>
     )
 }
