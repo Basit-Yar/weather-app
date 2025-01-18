@@ -56,7 +56,7 @@ const WeatherLayout = () => {
         }
         setTodayHourlyForecastData();
 
-        const setDailyForecastData = (date) => {
+        const extractAvgDailyForecastData = (date) => {
             if (weeklyForecastData != null) {
                 // const tomorrowDate = new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split("T")[0];
                 
@@ -100,7 +100,7 @@ const WeatherLayout = () => {
 
         const upcomingDaysForecastInfo = distinctDtTxt
             .filter(date => date != currentDate)  // filter out the current date because I don't want to display current date weather forecase since we are displaying it on top and hourly wise too.
-            .map(date => setDailyForecastData(date));
+            .map(date => extractAvgDailyForecastData(date));
         
         setDailyForecastData(upcomingDaysForecastInfo);
 
