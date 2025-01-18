@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import CurrentWeather from "./CurrentWeather";
 import TodayForecast from "./TodayForecast";
+import WeeklyForecast from "./WeeklyForecast";
 
 const WeatherLayout = () => {
 
@@ -111,6 +112,7 @@ const WeatherLayout = () => {
         <>
             <CurrentWeather data={weatherData} />
             <TodayForecast hourlyForecastData={hourlyForecastData} />
+            <WeeklyForecast data={dailyForecastData} />
         </>
     )
 }

@@ -9,7 +9,7 @@ function App() {
   // console.log('Your API Key:', appId);
   return (
     <>
-      <div className='bg-green-50 w-full min-h-[100vh]'>
+      <div className='bg-green-50 w-full min-h-[100vh] py-4'>
         <Header />
         <SearchBar />
         <WeatherLayout />
