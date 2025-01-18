@@ -12,6 +12,7 @@ const WeatherLayout = () => {
     const [weatherData, setWeatherData] = useState({});
     const [weeklyForecastData, setWeeklyForecastData] = useState(null);
     const [hourlyForecastData, setHourlyForecastData] = useState([]);
+    const [dailyForecastData, setDailyForecastData] = useState([])
 
     useEffect(() => {
         try {
@@ -54,6 +55,54 @@ const WeatherLayout = () => {
             }
         }
         setTodayHourlyForecastData();
+
+        const setDailyForecastData = (date) => {
+            if (weeklyForecastData != null) {
+                // const tomorrowDate = new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split("T")[0];
+                
+                
+                const filteredData = weeklyForecastData.list.filter(x => {
+                    const recordDate = x.dt_txt.split(" ")[0];
+
+                    // return !(currentDate == recordDate);
+                    return recordDate == date;
+                });
+
+                const aggregatedData = filteredData.reduce((accumulator, record) => {
+
+                    accumulator.temp += record.main.temp;
+                    accumulator.clouds += record.clouds.all;
+                    accumulator.windSpeed += record.wind.speed;
+                    accumulator.humidity += record.main.humidity;
+
+                    return accumulator;
+                }, { temp: 0, clouds: 0, windSpeed: 0, humidity: 0 });
+
+                // Get the weekday name
+                const weekday = new Date(date).toLocaleDateString("en-US", { weekday: "long" });
+
+
+                return {
+                    avgTemp: Math.round(aggregatedData.temp / filteredData.length),
+                    avgClouds: Math.round(aggregatedData.clouds / filteredData.length),
+                    avgWindSpeed: (aggregatedData.windSpeed / filteredData.length).toFixed(2),
+                    avgHumidity: Math.round(aggregatedData.humidity / filteredData.length),
+                    date: date,
+                    weekDayName: weekday
+                }
+            }
+        }
+        
+        const currentDate = new Date().toISOString().split("T")[0];
+        const distinctDtTxt = [
+            ...new Set(weeklyForecastData?.list.map(item => item.dt_txt.split(" ")[0]))
+        ]
+
+        const upcomingDaysForecastInfo = distinctDtTxt
+            .filter(date => date != currentDate)  // filter out the current date because I don't want to display current date weather forecase since we are displaying it on top and hourly wise too.
+            .map(date => setDailyForecastData(date));
+        
+        setDailyForecastData(upcomingDaysForecastInfo);
 
     }, [weeklyForecastData])
 
