@@ -4,7 +4,7 @@ const DailyForecast = ({ data }) => {
 
     return (
         <>
-            <div className="bg-green-200 border border-green-200 w-full px-2 sm:px-4 py-2 rounded shadow-md my-1.5 grid grid-cols-3 sm:place-items-center gap-y-2 text-xs">
+            <div className="bg-green-200 border border-green-200 w-full px-2 sm:px-4 py-2 rounded shadow-md my-1.5 grid grid-cols-3 gap-y-2 text-xs">
 
                 <h2 className='font-semibold text-sm sm:text-xl'>
                     {data.weekDayName}

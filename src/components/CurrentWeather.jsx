@@ -16,7 +16,8 @@ const CurrentWeather = ({ data }) => {
                             {Math.round(data.main?.temp)}°K
                         </h1>
                         <p className="text-slate-400">
-                            {data.weather && data.weather[0].main}
+                            {data.weather && data.weather[0].main} 
+                            <span className='text-xs sm:text-sm'>, {data.weather && data.weather[0].description}</span>
                         </p>
                     </div>
                     <div>

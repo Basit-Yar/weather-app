@@ -1,6 +1,5 @@
 import Header from './components/Header'
 import './App.css'
-import SearchBar from './components/SearchBar'
 import WeatherLayout from './components/WeatherLayout'
 
 function App() {
@@ -11,7 +10,6 @@ function App() {
     <>
       <div className='bg-green-50 w-full min-h-[100vh] py-4'>
         <Header />
-        <SearchBar />
         <WeatherLayout />
       </div>
     </>

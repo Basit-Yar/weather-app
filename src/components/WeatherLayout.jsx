@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import SearchBar from './SearchBar'
 import CurrentWeather from "./CurrentWeather";
 import TodayForecast from "./TodayForecast";
 import WeeklyForecast from "./WeeklyForecast";
@@ -60,8 +61,8 @@ const WeatherLayout = () => {
         const extractAvgDailyForecastData = (date) => {
             if (weeklyForecastData != null) {
                 // const tomorrowDate = new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split("T")[0];
-                
-                
+
+
                 const filteredData = weeklyForecastData.list.filter(x => {
                     const recordDate = x.dt_txt.split(" ")[0];
 
@@ -79,7 +80,7 @@ const WeatherLayout = () => {
                     accumulator.weatherDescriptions.push(record.weather[0].main);
 
                     return accumulator;
-                }, { temp: 0, clouds: 0, windSpeed: 0, humidity: 0, icons:[], weatherDescriptions:[] });
+                }, { temp: 0, clouds: 0, windSpeed: 0, humidity: 0, icons: [], weatherDescriptions: [] });
 
                 // Get the weekday name
                 const weekday = new Date(date).toLocaleDateString("en-US", { weekday: "long" });
@@ -97,7 +98,7 @@ const WeatherLayout = () => {
                 }
             }
         }
-        
+
         const currentDate = new Date().toISOString().split("T")[0];
         const distinctDtTxt = [
             ...new Set(weeklyForecastData?.list.map(item => item.dt_txt.split(" ")[0]))
@@ -106,7 +107,7 @@ const WeatherLayout = () => {
         const upcomingDaysForecastInfo = distinctDtTxt
             .filter(date => date != currentDate)  // filter out the current date because I don't want to display current date weather forecase since we are displaying it on top and hourly wise too.
             .map(date => extractAvgDailyForecastData(date));
-        
+
         setDailyForecastData(upcomingDaysForecastInfo);
 
     }, [weeklyForecastData])
@@ -116,6 +117,7 @@ const WeatherLayout = () => {
 
     return (
         <>
+            <SearchBar />
             <CurrentWeather data={weatherData} />
             <TodayForecast hourlyForecastData={hourlyForecastData} />
             <WeeklyForecast dailyForecastData={dailyForecastData} />
