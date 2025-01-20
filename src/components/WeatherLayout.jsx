@@ -107,12 +107,14 @@ const WeatherLayout = () => {
 
     }, [weeklyForecastData])
 
+    console.log("--- layout:")
+    console.log(dailyForecastData);
 
     return (
         <>
             <CurrentWeather data={weatherData} />
             <TodayForecast hourlyForecastData={hourlyForecastData} />
-            <WeeklyForecast data={dailyForecastData} />
+            <WeeklyForecast dailyForecastData={dailyForecastData} />
         </>
     )
 }
