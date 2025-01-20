@@ -75,9 +75,11 @@ const WeatherLayout = () => {
                     accumulator.clouds += record.clouds.all;
                     accumulator.windSpeed += record.wind.speed;
                     accumulator.humidity += record.main.humidity;
+                    accumulator.icons.push(record.weather[0].icon);
+                    accumulator.weatherDescriptions.push(record.weather[0].main);
 
                     return accumulator;
-                }, { temp: 0, clouds: 0, windSpeed: 0, humidity: 0 });
+                }, { temp: 0, clouds: 0, windSpeed: 0, humidity: 0, icons:[], weatherDescriptions:[] });
 
                 // Get the weekday name
                 const weekday = new Date(date).toLocaleDateString("en-US", { weekday: "long" });
@@ -89,7 +91,9 @@ const WeatherLayout = () => {
                     avgTemp: Math.round(aggregatedData.temp / filteredData.length),
                     avgClouds: Math.round(aggregatedData.clouds / filteredData.length),
                     avgWindSpeed: (aggregatedData.windSpeed / filteredData.length).toFixed(2),
-                    avgHumidity: Math.round(aggregatedData.humidity / filteredData.length)
+                    avgHumidity: Math.round(aggregatedData.humidity / filteredData.length),
+                    icon: aggregatedData.icons[Math.floor(Math.random() * aggregatedData.icons.length)], // just for selecting the random icon from array which is storing icon of hourly weather forecast.
+                    description: aggregatedData.weatherDescriptions[Math.floor(Math.random() * aggregatedData.icons.length)] // same doing for this one
                 }
             }
         }

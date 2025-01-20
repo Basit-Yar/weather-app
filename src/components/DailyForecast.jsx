@@ -20,8 +20,13 @@ const DailyForecast = ({ data }) => {
                     <h2>{data.avgWindSpeed}m/s</h2>
                 </div>
 
-                <div>
-                    <img src="" alt="error" />
+                <div className='flex items-center'>
+                    <img src={`https://openweathermap.org/img/wn/${data.icon}@2x.png`}
+                        alt="" 
+                        className='size-6'
+                    />
+                    <p>{data.description}</p>
+
                 </div>
 
                 <div className='flex'>
