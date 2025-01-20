@@ -16,7 +16,7 @@ const DailyForecast = ({ data }) => {
                 </div>
 
                 <div className='flex'>
-                    <Cloudy className='pr-1 size-5 sm:size-6' />
+                    <Wind className='pr-1 size-5 sm:size-6' />
                     <h2>{data.avgWindSpeed}m/s</h2>
                 </div>
 
