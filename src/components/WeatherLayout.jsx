@@ -84,12 +84,12 @@ const WeatherLayout = () => {
 
 
                 return {
+                    date: date,
+                    weekDayName: weekday,
                     avgTemp: Math.round(aggregatedData.temp / filteredData.length),
                     avgClouds: Math.round(aggregatedData.clouds / filteredData.length),
                     avgWindSpeed: (aggregatedData.windSpeed / filteredData.length).toFixed(2),
-                    avgHumidity: Math.round(aggregatedData.humidity / filteredData.length),
-                    date: date,
-                    weekDayName: weekday
+                    avgHumidity: Math.round(aggregatedData.humidity / filteredData.length)
                 }
             }
         }
@@ -107,8 +107,8 @@ const WeatherLayout = () => {
 
     }, [weeklyForecastData])
 
-    console.log("--- layout:")
-    console.log(dailyForecastData);
+    // console.log("--- layout:")
+    // console.log(dailyForecastData);
 
     return (
         <>
