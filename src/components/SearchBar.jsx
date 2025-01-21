@@ -6,7 +6,7 @@ const SearchBar = () => {
     const [isKelvin, setIsKelvin] = useState(true);
     
     const toggleSwitch = () => setIsKelvin(prev => !prev);
-    
+
     return (
         <>
             <div className="flex justify-between items-center p-3 sm:p-4 mx-3 sm:mx-16 my-4 rounded-md bg-green-100 shadow-md">
@@ -26,6 +26,7 @@ const SearchBar = () => {
                     <span className='z-10'>°C</span>
                     <span className='z-10'>°K</span>
                     <div className={`sm:w-10 w-7 sm:h-6 h-4 bg-green-300 rounded-2xl absolute shadow-xl ${isKelvin ? 'right-1/2' : 'left-1/2'}`}></div>
+                    {/* <div className={`sm:w-10 w-7 sm:h-6 h-4 bg-green-300 rounded-2xl absolute shadow-xl transform transition-transform duration-500 ease-in-out ${isKelvin ? 'translate-x-1/2' : '-translate-x-1/2'}`}></div> */}
                 </div>
             </div>
         </>

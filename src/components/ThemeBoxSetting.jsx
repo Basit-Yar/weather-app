@@ -4,7 +4,7 @@ const ThemeBoxSetting = () => {
 
     return (
         <>
-            <div className="absolute w-fit right-0 top-10 z-10 border-0 border-violet-700 rounded-md text-violet-700 px-3 py-2 bg-zinc-400">
+            <div className="absolute w-fit right-0 top-10 z-20 border-0 border-violet-700 rounded-md text-violet-700 px-3 py-2 bg-zinc-400">
 
                 <h1 className='font-semibold mb-1 whitespace-nowrap'>THEME SETTINGS</h1>
                 <div className='flex'>
