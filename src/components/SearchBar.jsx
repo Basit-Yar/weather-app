@@ -10,10 +10,15 @@ const SearchBar = () => {
                         placeholder="Search for a city..."
                         className="w-full outline-none focus:border-green-700 focus:border-2 p-2 rounded-md"
                     />
-                    <Search className='absolute top-2.5 right-2.5 text-gray-400'/>
+                    <Search className='absolute top-2.5 right-2.5 text-gray-400' />
                 </div>
-                <div className='w-fit border border-green-700 rounded-md py-1 px-3 bg-white'>
-                    Units{/* units like for celsius, kelvin, f.. */}
+                {/* <div className='w-fit border border-green-700 rounded-md py-1 px-3 bg-white'>
+                    Units
+                </div> */}
+                <div className='sm:w-24 w-16 h-6 sm:h-9 bg-white rounded-3xl flex justify-around items-center relative shadow-lg sm:text-base text-xs'>
+                    <span className='z-10'>°C</span>
+                    <span className='z-10'>°K</span>
+                    <div className='sm:w-10 w-7 sm:h-6 h-4 bg-green-300 rounded-2xl absolute right-1/2'></div>
                 </div>
             </div>
         </>
