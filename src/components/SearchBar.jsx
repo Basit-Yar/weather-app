@@ -1,12 +1,11 @@
 import { Search } from 'lucide-react'
-import { useState } from 'react';
+import { useWeather } from '../context/WeatherContext';
 
 const SearchBar = () => {
 
-    const [isKelvin, setIsKelvin] = useState(true);
+    const {isKelvin, setIsKelvin} = useWeather();
     
     const toggleSwitch = () => setIsKelvin(prev => !prev);
-    console.log("kelvin: " + isKelvin);
 
     return (
         <>

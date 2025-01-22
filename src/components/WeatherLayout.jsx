@@ -3,6 +3,7 @@ import SearchBar from './SearchBar'
 import CurrentWeather from "./CurrentWeather";
 import TodayForecast from "./TodayForecast";
 import WeeklyForecast from "./WeeklyForecast";
+import { WeatherContextProvider } from "../context/WeatherContext";
 
 const WeatherLayout = () => {
 
@@ -117,10 +118,12 @@ const WeatherLayout = () => {
 
     return (
         <>
-            <SearchBar />
-            <CurrentWeather data={weatherData} />
-            <TodayForecast hourlyForecastData={hourlyForecastData} />
-            <WeeklyForecast dailyForecastData={dailyForecastData} />
+            <WeatherContextProvider >
+                <SearchBar />
+                <CurrentWeather data={weatherData} />
+                <TodayForecast hourlyForecastData={hourlyForecastData} />
+                <WeeklyForecast dailyForecastData={dailyForecastData} />
+            </WeatherContextProvider>
         </>
     )
 }
