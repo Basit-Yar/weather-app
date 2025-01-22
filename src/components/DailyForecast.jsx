@@ -1,6 +1,9 @@
 import { Thermometer, Wind, Cloudy, Droplets } from 'lucide-react';
+import { useWeather } from '../context/WeatherContext';
 
 const DailyForecast = ({ data }) => {
+
+    const {displayTempUnit} = useWeather();
 
     return (
         <>
@@ -12,7 +15,7 @@ const DailyForecast = ({ data }) => {
 
                 <div className='flex'>
                     <Thermometer className='pr-1 size-5 sm:size-6' />
-                    <h2>{data.avgTemp}°K</h2>
+                    <h2>{data.avgTemp}{displayTempUnit}</h2>
                 </div>
 
                 <div className='flex'>

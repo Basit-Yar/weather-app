@@ -3,7 +3,7 @@ import SearchBar from './SearchBar'
 import CurrentWeather from "./CurrentWeather";
 import TodayForecast from "./TodayForecast";
 import WeeklyForecast from "./WeeklyForecast";
-import { WeatherContextProvider } from "../context/WeatherContext";
+import { useWeather, WeatherContextProvider } from "../context/WeatherContext";
 
 const WeatherLayout = () => {
 
@@ -11,19 +11,20 @@ const WeatherLayout = () => {
     const forecastBaseUrl = `https://api.openweathermap.org/data/2.5/forecast`;
     const appId = import.meta.env.VITE_APP_ID;
 
-    const [city, setCity] = useState("Bhopal"); // we will change the code for city.
+    const { searchCity, isKelvin, setDisplayTempUnit } = useWeather();
     const [weatherData, setWeatherData] = useState({});
     const [weeklyForecastData, setWeeklyForecastData] = useState(null);
     const [hourlyForecastData, setHourlyForecastData] = useState([]);
-    const [dailyForecastData, setDailyForecastData] = useState([])
+    const [dailyForecastData, setDailyForecastData] = useState([]);
+    // const [displayUnit, setDisplayUnit] = useState("");
 
     useEffect(() => {
         try {
             const fetchWeather = async () => {
-                const response = await fetch(`${weatherBaseUrl}?q=${city}&appid=${appId}`);
+                const response = await fetch(`${weatherBaseUrl}?q=${searchCity}&appid=${appId}&units=${isKelvin ? "" : "metric"}`);
                 const weatherData = await response.json();
                 setWeatherData(weatherData);
-                console.log(weatherData);
+                // console.log(weatherData);
             }
             fetchWeather();
         } catch (error) {
@@ -32,7 +33,7 @@ const WeatherLayout = () => {
 
         try {
             const fetchForecastData = async () => {
-                const response = await fetch(`${forecastBaseUrl}?q=${city}&appid=${appId}`);
+                const response = await fetch(`${forecastBaseUrl}?q=${searchCity}&appid=${appId}&units=${isKelvin ? "" : "metric"}`);
                 const forecastData = await response.json();
                 setWeeklyForecastData(forecastData);
             }
@@ -41,7 +42,16 @@ const WeatherLayout = () => {
             console.error("The error occured in fetching forecast data: " + error);
         }
 
-    }, []);
+        // method for displaying the temperature units value and it updates whenever changes in isKelvin state means someone toggle the switch button.
+        const changeTempDisplayUnit = () => {
+            if (isKelvin)
+                setDisplayTempUnit("°K");
+            else
+                setDisplayTempUnit("°C");
+        }
+        changeTempDisplayUnit();
+
+    }, [searchCity, isKelvin]);
 
     useEffect(() => {
 
@@ -118,12 +128,10 @@ const WeatherLayout = () => {
 
     return (
         <>
-            <WeatherContextProvider >
-                <SearchBar />
-                <CurrentWeather data={weatherData} />
-                <TodayForecast hourlyForecastData={hourlyForecastData} />
-                <WeeklyForecast dailyForecastData={dailyForecastData} />
-            </WeatherContextProvider>
+            <SearchBar />
+            <CurrentWeather data={weatherData} />
+            <TodayForecast hourlyForecastData={hourlyForecastData} />
+            <WeeklyForecast dailyForecastData={dailyForecastData} />
         </>
     )
 }

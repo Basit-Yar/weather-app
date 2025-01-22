@@ -1,6 +1,9 @@
 import {ThermometerSunIcon, Wind, Cloudy, Droplets} from 'lucide-react'; 
+import { useWeather } from '../context/WeatherContext';
 
 const CurrentWeather = ({ data }) => {
+
+    const { displayTempUnit } = useWeather();
 
     return (
         <>
@@ -13,7 +16,7 @@ const CurrentWeather = ({ data }) => {
                             {data.name}, {data.sys?.country}
                         </h2>
                         <h1 className="font-bold text-2xl sm:text-4xl mt-2">
-                            {Math.round(data.main?.temp)}°K
+                            {Math.round(data.main?.temp)}{displayTempUnit}
                         </h1>
                         <p className="text-slate-400">
                             {data.weather && data.weather[0].main} 
@@ -34,7 +37,7 @@ const CurrentWeather = ({ data }) => {
                             <ThermometerSunIcon className='inline-block pr-1 size-4 sm:size-6'/>
                             Real Feel
                         </p>
-                        <p className='font-bold'>{Math.round(data.main?.feels_like)}°K</p>
+                        <p className='font-bold'>{Math.round(data.main?.feels_like)}{displayTempUnit}</p>
                     </div>
                     <div className='flex flex-col items-center'>
                         <p className="text-slate-400">
