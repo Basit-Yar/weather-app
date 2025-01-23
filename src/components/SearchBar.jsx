@@ -6,36 +6,36 @@ const SearchBar = () => {
 
     const cityBaseUrl = `https://api.openweathermap.org/geo/1.0/direct`;
     const appId = import.meta.env.VITE_APP_ID;
-    const {isKelvin, setIsKelvin} = useWeather();
+    const { isKelvin, setIsKelvin } = useWeather();
     const [search, setSearch] = useState("");
     const [searchCitiesInfo, setSearchCitiesInfo] = useState([]);
-    
+
     const toggleSwitch = () => setIsKelvin(prev => !prev);
 
     // const changeSearchCity = () => {
 
-        useEffect(() => {
+    useEffect(() => {
 
-            try {
-                const fetchCityInfo = async () => {
-                    const request = await fetch(`${cityBaseUrl}?q=${search}&limit=${5}&appid=${appId}`);
-                    const response = await request.json();
-                    const reqiredCities = response.map(cityInfo => {
-                       return {
-                            cityName: cityInfo.name,
-                            state: cityInfo.state,
-                            country: cityInfo.country
-                       };
-                    })
-                    setSearchCitiesInfo(reqiredCities);
-                }
-                fetchCityInfo();
-    
-            } catch(error) {
-                console.log("error occured while fetching city info: " + error);
+        try {
+            const fetchCityInfo = async () => {
+                const request = await fetch(`${cityBaseUrl}?q=${search}&limit=${4}&appid=${appId}`);
+                const response = await request.json();
+                const reqiredCities = response.map(cityInfo => {
+                    return {
+                        cityName: cityInfo.name,
+                        state: cityInfo.state,
+                        country: cityInfo.country
+                    };
+                })
+                setSearchCitiesInfo(reqiredCities);
             }
+            fetchCityInfo();
 
-        }, [search])
+        } catch (error) {
+            console.log("error occured while fetching city info: " + error);
+        }
+
+    }, [search])
 
     // }
 
@@ -50,6 +50,15 @@ const SearchBar = () => {
                         onChange={(e) => setSearch(e.target.value)}
                     />
                     <Search className='absolute top-2.5 right-2.5 text-gray-400' />
+                    <div className='p-2 mt-1 absolute left-0 w-full bg-white rounded-md shadow-lg z-10'>
+                        {searchCitiesInfo.map(x => {
+                            return (
+                                <p className='px-2 py-1 hover:bg-green-200 rounded'>
+                                    {x.cityName}, {x.country}
+                                </p>
+                            );
+                        })}
+                    </div>
                 </div>
                 {/* <div className='w-fit border border-green-700 rounded-md py-1 px-3 bg-white'>
                     Units
