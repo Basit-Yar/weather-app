@@ -20,36 +20,13 @@ const SearchBar = () => {
 
     const handleCitySelection = (city) => {
         console.log("clicked on city: " + city);
-        //set the search as well as searchCity which is inside the weather context I guess.
         setSearchQuery(city);
         setSearchCity(city);
-
         // close the dropdown
         setIsDropdownOpen(false);
     }
 
     useEffect(() => {
-
-        // try {
-        //     const fetchCityInfo = async () => {
-        //         if (searchQuery.trim().length == 0)
-        //             return;
-        //         const request = await fetch(`${CITY_BASE_URL}?q=${searchQuery}&limit=${SUGGESTION_LIMIT}&appid=${appId}`);
-        //         const response = await request.json();
-        //         const reqiredCities = response.map(cityInfo => {
-        //             return {
-        //                 cityName: cityInfo.name,
-        //                 state: cityInfo.state,
-        //                 country: cityInfo.country
-        //             };
-        //         })
-        //         setSuggestedCities(reqiredCities);
-        //     }
-        //     fetchCityInfo();
-
-        // } catch (error) {
-        //     console.log("error occured while fetching city info: " + error);
-        // }
 
         const fetchCitySuggestions = async () => {
             // if (searchQuery.trim().length == 0)
