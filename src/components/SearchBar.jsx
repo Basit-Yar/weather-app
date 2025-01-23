@@ -13,10 +13,12 @@ const SearchBar = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     
     const appId = import.meta.env.VITE_APP_ID;
-    
-    const toggleSwitch = () => setIsKelvin(prev => !prev);
 
-    const onSelectSearchedCity = (city) => {
+    const handleToggleUnits = () => {
+        setIsKelvin((prev) => !prev);
+    };
+
+    const handleCitySelection = (city) => {
         console.log("clicked on city: " + city);
         //set the search as well as searchCity which is inside the weather context I guess.
         setSearchQuery(city);
@@ -28,26 +30,63 @@ const SearchBar = () => {
 
     useEffect(() => {
 
-        try {
-            const fetchCityInfo = async () => {
-                if (searchQuery.trim().length == 0)
-                    return;
-                const request = await fetch(`${CITY_BASE_URL}?q=${searchQuery}&limit=${SUGGESTION_LIMIT}&appid=${appId}`);
+        // try {
+        //     const fetchCityInfo = async () => {
+        //         if (searchQuery.trim().length == 0)
+        //             return;
+        //         const request = await fetch(`${CITY_BASE_URL}?q=${searchQuery}&limit=${SUGGESTION_LIMIT}&appid=${appId}`);
+        //         const response = await request.json();
+        //         const reqiredCities = response.map(cityInfo => {
+        //             return {
+        //                 cityName: cityInfo.name,
+        //                 state: cityInfo.state,
+        //                 country: cityInfo.country
+        //             };
+        //         })
+        //         setSuggestedCities(reqiredCities);
+        //     }
+        //     fetchCityInfo();
+
+        // } catch (error) {
+        //     console.log("error occured while fetching city info: " + error);
+        // }
+
+        const fetchCitySuggestions = async () => {
+            // if (searchQuery.trim().length == 0)
+            //     return;
+            if (!searchQuery.trim()) {
+                setSuggestedCities([]);
+                return;
+            }
+
+            try {
+
+                const request = await fetch(
+                    `${CITY_BASE_URL}?q=${searchQuery}&limit=${SUGGESTION_LIMIT}&appid=${appId}`
+                );
+                /**
+                 * Todo: if response is not ok.
+                 */
+                // if (!response.ok) {
+                //     throw new Error(`Failed to fetch city suggestions: ${response.statusText}`);
+                // }
                 const response = await request.json();
-                const reqiredCities = response.map(cityInfo => {
+                const formattedCities = response.map(city => {
                     return {
-                        cityName: cityInfo.name,
-                        state: cityInfo.state,
-                        country: cityInfo.country
+                        cityName: city.name,
+                        state: city.state,
+                        country: city.country
                     };
                 })
-                setSuggestedCities(reqiredCities);
-            }
-            fetchCityInfo();
+                setSuggestedCities(formattedCities);
 
-        } catch (error) {
-            console.log("error occured while fetching city info: " + error);
+            } catch (error) {
+                console.error("Error fetching city suggestions:", error);
+            }
         }
+
+        const debounceTimeout = setTimeout(fetchCitySuggestions, 500);
+        return () => clearTimeout(debounceTimeout);
 
     }, [searchQuery])
 
@@ -62,13 +101,13 @@ const SearchBar = () => {
                         onChange={(e) => { setSearchQuery(e.target.value); setIsDropdownOpen(true) }}
                     />
                     <Search className='absolute top-2.5 right-2.5 text-gray-400' />
-                    {isDropdownOpen && searchQuery.trim().length > 0
+                    {isDropdownOpen && searchQuery.trim().length > 2
                         &&
                         <div className='p-2 mt-1 absolute left-0 w-full bg-white rounded-md shadow-lg z-10'>
                             {suggestedCities.map(x => {
                                 return (
                                     <p className='px-2 py-1 hover:bg-green-200 rounded cursor-pointer'
-                                        onClick={() => onSelectSearchedCity(x.cityName)}
+                                        onClick={() => handleCitySelection(x.cityName)}
                                     >
                                         {x.cityName}, {x.country}
                                     </p>
@@ -77,11 +116,9 @@ const SearchBar = () => {
                         </div>
                     }
                 </div>
-                {/* <div className='w-fit border border-green-700 rounded-md py-1 px-3 bg-white'>
-                    Units
-                </div> */}
+
                 <div className='sm:w-24 w-16 h-6 sm:h-9 bg-white rounded-3xl flex justify-around items-center relative border border-green-300 sm:text-base text-xs cursor-pointer'
-                    onClick={toggleSwitch}
+                    onClick={handleToggleUnits}
                 >
                     <span className='z-10'>°C</span>
                     <span className='z-10'>°K</span>
