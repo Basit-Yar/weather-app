@@ -6,18 +6,29 @@ const SearchBar = () => {
 
     const cityBaseUrl = `https://api.openweathermap.org/geo/1.0/direct`;
     const appId = import.meta.env.VITE_APP_ID;
-    const { isKelvin, setIsKelvin } = useWeather();
+    const { isKelvin, setIsKelvin, setSearchCity } = useWeather();
     const [search, setSearch] = useState("");
     const [searchCitiesInfo, setSearchCitiesInfo] = useState([]);
+    const [isOpenCitySuggestionDropdown, setIsOpenCitySuggestionDropdown] = useState(false);
 
     const toggleSwitch = () => setIsKelvin(prev => !prev);
 
-    // const changeSearchCity = () => {
+    const onSelectSearchedCity = (city) => {
+        console.log("clicked on city: " + city);
+        //set the search as well as searchCity which is inside the weather context I guess.
+        setSearch(city);
+        setSearchCity(city);
+
+        // close the dropdown
+        setIsOpenCitySuggestionDropdown(false);
+    }
 
     useEffect(() => {
 
         try {
             const fetchCityInfo = async () => {
+                if (search.trim().length == 0)
+                    return;
                 const request = await fetch(`${cityBaseUrl}?q=${search}&limit=${4}&appid=${appId}`);
                 const response = await request.json();
                 const reqiredCities = response.map(cityInfo => {
@@ -37,8 +48,6 @@ const SearchBar = () => {
 
     }, [search])
 
-    // }
-
     return (
         <>
             <div className="flex justify-between items-center p-3 sm:p-4 mx-3 sm:mx-16 my-4 rounded-md bg-green-100 shadow-md">
@@ -46,19 +55,24 @@ const SearchBar = () => {
                     <input
                         placeholder="Search for a city..."
                         className="w-full outline-none focus:border-green-700 focus:border-2 p-2 rounded-md"
-                        // value={search}
-                        onChange={(e) => setSearch(e.target.value)}
+                        value={search}
+                        onChange={(e) => { setSearch(e.target.value); setIsOpenCitySuggestionDropdown(true) }}
                     />
                     <Search className='absolute top-2.5 right-2.5 text-gray-400' />
-                    <div className='p-2 mt-1 absolute left-0 w-full bg-white rounded-md shadow-lg z-10'>
-                        {searchCitiesInfo.map(x => {
-                            return (
-                                <p className='px-2 py-1 hover:bg-green-200 rounded'>
-                                    {x.cityName}, {x.country}
-                                </p>
-                            );
-                        })}
-                    </div>
+                    {isOpenCitySuggestionDropdown && search.trim().length > 0
+                        &&
+                        <div className='p-2 mt-1 absolute left-0 w-full bg-white rounded-md shadow-lg z-10'>
+                            {searchCitiesInfo.map(x => {
+                                return (
+                                    <p className='px-2 py-1 hover:bg-green-200 rounded cursor-pointer'
+                                        onClick={() => onSelectSearchedCity(x.cityName)}
+                                    >
+                                        {x.cityName}, {x.country}
+                                    </p>
+                                );
+                            })}
+                        </div>
+                    }
                 </div>
                 {/* <div className='w-fit border border-green-700 rounded-md py-1 px-3 bg-white'>
                     Units
