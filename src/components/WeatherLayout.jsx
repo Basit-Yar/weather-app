@@ -16,7 +16,6 @@ const WeatherLayout = () => {
     const [weeklyForecastData, setWeeklyForecastData] = useState(null);
     const [hourlyForecastData, setHourlyForecastData] = useState([]);
     const [dailyForecastData, setDailyForecastData] = useState([]);
-    // const [displayUnit, setDisplayUnit] = useState("");
 
     useEffect(() => {
         try {
@@ -123,8 +122,6 @@ const WeatherLayout = () => {
 
     }, [weeklyForecastData])
 
-    // console.log("--- layout:")
-    // console.log(dailyForecastData);
 
     return (
         <>

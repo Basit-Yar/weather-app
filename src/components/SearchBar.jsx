@@ -1,11 +1,43 @@
 import { Search } from 'lucide-react'
 import { useWeather } from '../context/WeatherContext';
+import { useEffect, useState } from 'react';
 
 const SearchBar = () => {
 
+    const cityBaseUrl = `https://api.openweathermap.org/geo/1.0/direct`;
+    const appId = import.meta.env.VITE_APP_ID;
     const {isKelvin, setIsKelvin} = useWeather();
+    const [search, setSearch] = useState("");
+    const [searchCitiesInfo, setSearchCitiesInfo] = useState([]);
     
     const toggleSwitch = () => setIsKelvin(prev => !prev);
+
+    // const changeSearchCity = () => {
+
+        useEffect(() => {
+
+            try {
+                const fetchCityInfo = async () => {
+                    const request = await fetch(`${cityBaseUrl}?q=${search}&limit=${5}&appid=${appId}`);
+                    const response = await request.json();
+                    const reqiredCities = response.map(cityInfo => {
+                       return {
+                            cityName: cityInfo.name,
+                            state: cityInfo.state,
+                            country: cityInfo.country
+                       };
+                    })
+                    setSearchCitiesInfo(reqiredCities);
+                }
+                fetchCityInfo();
+    
+            } catch(error) {
+                console.log(error);
+            }
+
+        }, [search])
+
+    // }
 
     return (
         <>
@@ -14,6 +46,8 @@ const SearchBar = () => {
                     <input
                         placeholder="Search for a city..."
                         className="w-full outline-none focus:border-green-700 focus:border-2 p-2 rounded-md"
+                        // value={search}
+                        onChange={(e) => setSearch(e.target.value)}
                     />
                     <Search className='absolute top-2.5 right-2.5 text-gray-400' />
                 </div>
