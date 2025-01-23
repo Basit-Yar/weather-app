@@ -32,7 +32,7 @@ const SearchBar = () => {
                 fetchCityInfo();
     
             } catch(error) {
-                console.log(error);
+                console.log("error occured while fetching city info: " + error);
             }
 
         }, [search])
