@@ -11,7 +11,7 @@ const SearchBar = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [suggestedCities, setSuggestedCities] = useState([]);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    
+
     const appId = import.meta.env.VITE_APP_ID;
 
     const handleToggleUnits = () => {
@@ -67,6 +67,32 @@ const SearchBar = () => {
 
     }, [searchQuery])
 
+    const renderCitySuggestions = () => {
+        return (
+
+            <div className='p-2 mt-1 absolute left-0 w-full bg-white rounded-md shadow-lg z-10'>
+
+                {suggestedCities.length > 0 ? (
+                    suggestedCities.map((x, index) => {
+                        return (
+                            <p
+                                key={index}
+                                className='px-2 py-1 hover:bg-green-200 rounded cursor-pointer'
+                                onClick={() => handleCitySelection(x.cityName)}
+                            >
+                                {x.cityName}, {x.country}
+                            </p>
+                        );
+                    })
+                ) : (
+                    <p className='px-2 py-1 bg-red-200 rounded cursor-not-allowed text-center'>
+                        No results found
+                    </p>
+                )}
+            </div>
+        );
+    }
+
     return (
         <>
             <div className="flex justify-between items-center p-3 sm:p-4 mx-3 sm:mx-16 my-4 rounded-md bg-green-100 shadow-md">
@@ -75,23 +101,13 @@ const SearchBar = () => {
                         placeholder="Search for a city..."
                         className="w-full outline-none focus:border-green-700 focus:border-2 p-2 rounded-md"
                         value={searchQuery}
-                        onChange={(e) => { setSearchQuery(e.target.value); setIsDropdownOpen(true) }}
+                        onChange={(e) => {
+                            setSearchQuery(e.target.value);
+                            setIsDropdownOpen(true);
+                        }}
                     />
                     <Search className='absolute top-2.5 right-2.5 text-gray-400' />
-                    {isDropdownOpen && searchQuery.trim().length > 2
-                        &&
-                        <div className='p-2 mt-1 absolute left-0 w-full bg-white rounded-md shadow-lg z-10'>
-                            {suggestedCities.map(x => {
-                                return (
-                                    <p className='px-2 py-1 hover:bg-green-200 rounded cursor-pointer'
-                                        onClick={() => handleCitySelection(x.cityName)}
-                                    >
-                                        {x.cityName}, {x.country}
-                                    </p>
-                                );
-                            })}
-                        </div>
-                    }
+                    {isDropdownOpen && searchQuery.trim().length > 0 && renderCitySuggestions()}
                 </div>
 
                 <div className='sm:w-24 w-16 h-6 sm:h-9 bg-white rounded-3xl flex justify-around items-center relative border border-green-300 sm:text-base text-xs cursor-pointer'
